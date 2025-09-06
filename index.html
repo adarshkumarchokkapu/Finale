@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lane Division for Vehicles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ecf0f1;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #2d3436;
+    }
+    .lanes {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .lane {
+      flex: 1;
+      margin: 0 12px;
+      padding: 30px 10px;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+      background: #dfe6e9;
+      border: 4px solid transparent;
+    }
+    .lane.selected {
+      box-shadow: 0 0 18px #00b894;
+      transform: scale(1.04);
+      border-color: #00b894;
+      z-index: 1;
+    }
+    .lane .icon {
+      font-size: 46px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .lane-1 { background: linear-gradient(160deg, #fdcb6e 60%, #ffeaa7 100%);}
+    .lane-2 { background: linear-gradient(160deg, #00b894 60%, #55efc4 100%);}
+    .lane-3 { background: linear-gradient(160deg, #0984e3 60%, #74b9ff 100%);}
+    .lane-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 7px;
+      color: #2d3436;
+    }
+    .lane-desc {
+      color: #636e72;
+      font-size: 1em;
+    }
+    @media (max-width: 800px) {
+      .lanes { flex-direction: column; }
+      .lane { margin: 16px 0; }
+    }
+    .instructions {
+      margin-top: 25px;
+      color: #636e72;
+      font-size: 1.12em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Divided Lanes For Vehicles</h1>
+    <div class="instructions">
+      Click on a lane to see which vehicles can use it!
+    </div>
+    <div class="lanes">
+      <div class="lane lane-1" id="lane1">
+        <span class="icon">🛵</span>
+        <div class="lane-title">Lane 1</div>
+        <div class="lane-desc">Two Wheelers Only</div>
+      </div>
+      <div class="lane lane-2" id="lane2">
+        <span class="icon">🚑</span>
+        <div class="lane-title">Lane 2</div>
+        <div class="lane-desc">Emergency Vehicles (Ambulance, Fire Truck, Police, etc.)</div>
+      </div>
+      <div class="lane lane-3" id="lane3">
+        <span class="icon">🚗</span>
+        <div class="lane-title">Lane 3</div>
+        <div class="lane-desc">Four Wheelers (Cars, SUVs, etc.)</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Lane info for popup/modal
+    const laneInfos = {
+      lane1: {
+        title: "Lane 1 - Two Wheelers",
+        message: "This lane is exclusively for two wheelers such as bikes, scooters, and mopeds. No four wheelers or emergency vehicles allowed."
+      },
+      lane2: {
+        title: "Lane 2 - Emergency Vehicles",
+        message: "Reserved for emergency vehicles only: Ambulances, Fire Trucks, Police Cars, etc. Please keep this lane clear for emergencies!"
+      },
+      lane3: {
+        title: "Lane 3 - Four Wheelers",
+        message: "This lane is for standard four wheeled vehicles such as cars, SUVs, and vans. No two wheelers or emergency vehicles allowed."
+      }
+    };
+
+    // Handle lane selection and info
+    document.querySelectorAll('.lane').forEach(lane => {
+      lane.addEventListener('click', function() {
+        document.querySelectorAll('.lane').forEach(l => l.classList.remove('selected'));
+        this.classList.add('selected');
+        const info = laneInfos[this.id];
+        alert(`${info.title}\n\n${info.message}`);
+      });
+    });
+  </script>
+</body>
+</html>
